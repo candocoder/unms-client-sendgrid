@@ -150,9 +150,31 @@ class Interpreter {
               throw new \UnexpectedValueException('type is invalid', 400);
             }
             
+            global $config;
+            
+            if(!empty($config['APIKEY']))
+            {
+              $email = new \SendGrid\Mail\Mail();
+              $email->setFrom("jared@mollenkamp.com", "Example User");
+              $email->setSubject("Sending with SendGrid is Fun");
+              $email->addTo("jamollenkamp@gmail.com", "Example User");
+              $email->addContent(
+                  "text/plain", "and easy to do anywhere, even with PHP"
+              );
+              $email->addContent(
+                  "text/html", "<strong>and easy to do anywhere, even with PHP</strong>"
+              );
+              $sendgrid = new \SendGrid($config['APIKEY']);
+              try {
+                  $response = $sendgrid->send($email);
+              } catch (Exception $e) {
+                  $response = json_encode($e->getMessage());
+              }
+            }
             $this->code = 200;
             $this->response = json_encode($response);
             $this->ready = true;
+
           } catch (\GuzzleHttp\Exception\ClientException $e) {
 
             $this->response = $e->getResponse()->getBody()->getContents();

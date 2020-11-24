@@ -4,7 +4,7 @@
     "name": "ucrm-client-signup",
     "displayName": "UCRM Client Signup",
     "description": "A UCRM plugin that provides a frontend form for clients to signup.",
-    "url": "https://github.com/Ubiquiti-App/UCRM-plugins/tree/master/plugins/ucrm-client-signup",
+    "url": "https://github.com/candocoder/ucrm-client-sendgrid",
     "version": "1.2.1",
     "ucrmVersionCompliancy": {
       "min": "2.14.0",
@@ -14,7 +14,7 @@
       "min": "1.0.0-dev.1",
       "max": null
     },
-    "author": "Charuwts, LLC"
+    "author": "Jared Mollenkamp"
   },
   "configuration": [
     {
@@ -49,12 +49,12 @@
         "type": "checkbox",
         "description": "Create Lead instead of Client",
         "required": 0
-    }
+    },
     {
-      "key": "LEAD",
-      "label": "Create Lead",
-      "type": "checkbox",
-      "description": "Create Lead instead of Client",
+      "key": "APIKEY",
+      "label": "SendGrid API Key",
+      "type": "password",
+      "description": "API Key from Send Grid",
       "required": 0
   }
   ]
