@@ -1,8 +1,8 @@
 {
   "version": "1",
   "information": {
-    "name": "ucrm-client-signup",
-    "displayName": "UCRM Client Signup",
+    "name": "ucrm-client-sendgrid",
+    "displayName": "UCRM Client Signup + SendGrid",
     "description": "A UCRM plugin that provides a frontend form for clients to signup.",
     "url": "https://github.com/candocoder/ucrm-client-sendgrid",
     "version": "1.2.1",
@@ -56,6 +56,30 @@
       "type": "password",
       "description": "API Key from Send Grid",
       "required": 0
-  }
+    },
+    {
+      "key": "FROM_NAME",
+      "label": "From Name",
+      "description": "Alerts From Name",
+      "required": 0
+    },
+    {
+      "key": "FROM_EMAIL",
+      "label": "From Email",
+      "description": "Alerts From Email (Send Grid Domain Only)",
+      "required": 0
+    },
+    {
+      "key": "TO_NAME",
+      "label": "To Name",
+      "description": "Name of Person to Send Alerts to",
+      "required": 0
+    },
+    {
+      "key": "TO_EMAIL",
+      "label": "To Email",
+      "description": "Email to Send To",
+      "required": 0
+    }
   ]
 }

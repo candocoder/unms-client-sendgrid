@@ -146,30 +146,28 @@ class Interpreter {
               $response = $this->get($payloadDecoded->api->endpoint, $data);
             } elseif ($payloadDecoded->api->type == 'POST') {
               $response = $this->post($payloadDecoded->api->endpoint, $data);
+                global $config;
+
+                if(!empty($config['APIKEY']))
+                {
+                  $email = new \SendGrid\Mail\Mail();
+                  $email->setFrom($config['FROM_EMAIL'], $config['FROM_NAME']);
+                  $email->setSubject("New Client Registered");
+                  $email->addTo($config['TO_EMAIL'], $config["TO_NAME"]);
+                  $email->addContent(
+                      "text/plain", "Please check UNMS for more information."
+                  );
+                  $email->addContent(
+                      "text/html", "<strong>Please check UNMS for more information.</strong>"
+                  );
+                  $sendgrid = new \SendGrid($config['APIKEY']);
+                  try {
+                      $sendgrid->send($email);
+                  } catch (Exception $e) {
+                  }
+                }
             } else {
               throw new \UnexpectedValueException('type is invalid', 400);
-            }
-            
-            global $config;
-            
-            if(!empty($config['APIKEY']))
-            {
-              $email = new \SendGrid\Mail\Mail();
-              $email->setFrom("jared@mollenkamp.com", "Example User");
-              $email->setSubject("Sending with SendGrid is Fun");
-              $email->addTo("jamollenkamp@gmail.com", "Example User");
-              $email->addContent(
-                  "text/plain", "and easy to do anywhere, even with PHP"
-              );
-              $email->addContent(
-                  "text/html", "<strong>and easy to do anywhere, even with PHP</strong>"
-              );
-              $sendgrid = new \SendGrid($config['APIKEY']);
-              try {
-                  $response = $sendgrid->send($email);
-              } catch (Exception $e) {
-                  $response = json_encode($e->getMessage());
-              }
             }
             $this->code = 200;
             $this->response = json_encode($response);
